@@ -1,0 +1,5 @@
+puppet-module-plexxi-customer-syslog (1.0.0) unstable; urgency=medium
+
+  * Initial release.
+
+ -- Matthew Morgan <matt.morgan@plexxi.com>  Mon, 3 Aug 2017 12:42:22 -0400

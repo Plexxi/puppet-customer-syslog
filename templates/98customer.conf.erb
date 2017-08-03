@@ -1,0 +1,19 @@
+#
+# This file is managed by Puppet.
+# Any changes will likely be overwritten
+#
+
+<%- fac = @facility.downcase -%>
+<%- if fac == 'all'-%> <%- fac='*' -%> <%- end -%>
+<%- sev = @severity.downcase -%>
+<%- if sev == 'all' -%> <%- sev='*' -%> <%- end -%>
+
+<%- if @enabled == true -%>
+<%- if @host != '0.0.0.0' -%>
+<%= fac %>.<%= sev %>  @<%= @host %>:<%= @port %>
+<%- else -%>
+# customer syslog forwarding disabled
+<%- end -%>
+<%- else -%>
+# customer syslog forwarding disabled
+<%- end -%>
