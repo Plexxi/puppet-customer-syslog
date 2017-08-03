@@ -75,7 +75,7 @@
 #
 class customer-syslog(
   $enabled,
-  $host       = '0.0.0.0',
+  $host       = undef,
   $port       = 514,
   $facility   = 'all',
   $severity   = 'all',
@@ -121,7 +121,12 @@ $approved_severity = [
 
        validate_re(downcase($facility), $approved_facility)
        validate_re(downcase($severity), $approved_severity)
-       
+
+       if $enabled == true {
+           if $host == undef {
+              fail('host must be provided when enabling')
+           }
+       }
        file { '/etc/rsyslog.d/98customer.conf':
                ensure  => file,
                owner   => 0,
