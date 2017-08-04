@@ -1,6 +1,6 @@
 # == Class: customer-syslog
 #
-# Puppet module to manage TACACS+ PAM and NSS configuration.
+# Puppet module to manage customer syslog configuration
 #
 # === Parameters
 #
@@ -121,6 +121,14 @@ $approved_severity = [
 
        validate_re(downcase($facility), $approved_facility)
        validate_re(downcase($severity), $approved_severity)
+       if is_integer($port) {
+            if ($port < 1) or ($port > 65535) {
+                fail('port must be an integer from 1 to 65535')
+            }
+       }
+       else {
+           fail('port must be an integer')
+       }
 
        if $enabled == true {
            if $host == undef {
