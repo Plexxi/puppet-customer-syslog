@@ -62,7 +62,11 @@
 #
 #  class { 'customer-syslog':
 #    enabled => true,
-#    host => '192.168.1.1',
+#    entry_list => '[ { host => 192.168.1.1',
+#                       port => 514,
+#                       facility => 'all',
+#                       severity => 'all'
+#                      } ]
 #  }
 #
 # === Authors
@@ -75,75 +79,91 @@
 #
 class customer-syslog(
   $enabled,
-  $host       = undef,
-  $port       = 514,
-  $facility   = 'all',
-  $severity   = 'all',
+  $entry_list = [],
 ) {
-$approved_facility = [
-      'all',
-      'kern',
-      'user',
-      'mail',
-      'daemon',
-      'auth',
-      'syslog',
-      'lpr',
-      'news',
-      'uucp',
-      'cron',
-      'security',
-      'ftp',
-      'ntp',
-      'logaudit',
-      'logalert',
-      'clock',
-      'local0',
-      'local1',
-      'local2',
-      'local3',
-      'local4',
-      'local5',
-      'local6',
-      'local7'
-      ]
-$approved_severity = [
-      'all',
-      'emerg',
-      'alert',
-      'crit',
-      'error',
-      'warning',
-      'notice',
-      'info',
-      'debug'
-      ]
 
-       validate_re(downcase($facility), $approved_facility)
-       validate_re(downcase($severity), $approved_severity)
-       if is_integer($port) {
-            if ($port < 1) or ($port > 65535) {
-                fail('port must be an integer from 1 to 65535')
-            }
-       }
-       else {
-           fail('port must be an integer')
-       }
+      #  $host       = undef,
+      #  $port       = 514,
+      #  $facility   = 'all',
+      #  $severity   = 'all',
+      define validate_entries {
+          $approved_facility = [
+              'all',
+              'kern',
+              'user',
+              'mail',
+              'daemon',
+              'auth',
+              'syslog',
+              'lpr',
+              'news',
+              'uucp',
+              'cron',
+              'security',
+              'ftp',
+              'ntp',
+              'logaudit',
+              'logalert',
+              'clock',
+              'local0',
+              'local1',
+              'local2',
+              'local3',
+              'local4',
+              'local5',
+              'local6',
+              'local7'
+              ]
+          $approved_severity = [
+              'all',
+              'emerg',
+              'alert',
+              'crit',
+              'error',
+              'warning',
+              'notice',
+              'info',
+              'debug'
+              ]
+          validate_hash($name)
+          validate_re(downcase($name[facility]), $approved_facility)
+          validate_re(downcase($name[severity]), $approved_severity)
+          if has_key($name, port) {
+              if is_integer($name[port]) {
+                  if ($name[port] < 1) or ($name[port] > 65535) {
+                      fail('port must be an integer from 1 to 65535')
+                  }
+              }
+              else {
+                  fail('port must be an integer')
+              }
+          }
+          if !has_key($name, host) {
+              fail('host must be provided for each list entry')
+          }
+      }
 
-       if $enabled == true {
-           if $host == undef {
-              fail('host must be provided when enabling')
+      validate_bool($enabled)
+      validate_array($entry_list)
+      validate_entries { $entry_list: }
+      if $enabled { 
+          file { '/etc/rsyslog.d/98customer.conf':
+                  ensure  => file,
+                  owner   => 0,
+                  group   => 0,
+                  mode    => '0644',
+                  content => template('customer-syslog/98customer.conf.erb'),
            }
-       }
-       file { '/etc/rsyslog.d/98customer.conf':
-               ensure  => file,
-               owner   => 0,
-               group   => 0,
-               mode    => '0644',
-               content => template('customer-syslog/98customer.conf.erb'),
-        }
-        exec { 'rsyslog_restart':
-             command => '/usr/sbin/service rsyslog restart',
-        }
-
+           exec { 'rsyslog_restart':
+                   command => '/usr/sbin/service rsyslog restart',
+           }
+      }
+      else {
+          file { '/etc/rsyslog.d/98customer.conf':
+                  ensure  => absent,
+          }
+          exec { 'rsyslog_restart':
+                  command => '/usr/sbin/service rsyslog restart',
+          }
+      }
 }

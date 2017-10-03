@@ -3,17 +3,20 @@
 # Any changes will likely be overwritten
 #
 
-<%- fac = @facility.downcase -%>
-<%- if fac == 'all'-%> <%- fac='*' -%> <%- end -%>
-<%- sev = @severity.downcase -%>
-<%- if sev == 'all' -%> <%- sev='*' -%> <%- end -%>
 
+<% if @entry_list -%>
+<% Array(@entry_list).each do |entry| -%>
+<%- fac = entry['facility'].downcase -%>
+<%- if fac == 'all'-%> <%- fac='*' -%> <%- end -%>
+<%- sev = entry['severity'].downcase -%>
+<%- if sev == 'all' -%> <%- sev='*' -%> <%- end -%>
+<%- if entry['port'].nil? -%> <%- port='514' -%> <%- else -%> <%- port=entry['port'] -%><%- end -%>
 <%- if @enabled == true -%>
-<%- if @host != '0.0.0.0' -%>
-<%= fac %>.<%= sev %>  @<%= @host %>:<%= @port %>
-<%- else -%>
-# customer syslog forwarding disabled
+<%- if entry['host'] != '0.0.0.0' -%>
+<%= fac %>.<%= sev %>  @<%= entry['host'] %>:<%= port %>
 <%- end -%>
+<%- end -%>
+<% end -%>
 <%- else -%>
 # customer syslog forwarding disabled
 <%- end -%>

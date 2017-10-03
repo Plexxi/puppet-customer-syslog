@@ -1,3 +1,9 @@
+puppet-module-plexxi-customer-syslog (1.0.1) UNRELEASED; urgency=medium
+
+  * Changed interface to be a list of entries 
+
+ -- Matthew Morgan <matt.morgan@plexxi.com>  Mon, 02 Oct 2017 15:34:10 -0400
+
 puppet-module-plexxi-customer-syslog (1.0.0) unstable; urgency=medium
 
   * Initial release.
