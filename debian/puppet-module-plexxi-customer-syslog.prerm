@@ -19,8 +19,8 @@ set -e
 
 case "$1" in
     remove|upgrade|deconfigure)
-        update-alternatives --remove puppet-module-customer-syslog \
-            /usr/share/puppet/modules.available/plexxi-customer-syslog
+        update-alternatives --remove puppet-module-customer_syslog \
+            /usr/share/puppet/modules.available/plexxi-customer_syslog
     ;;
 
     failed-upgrade)

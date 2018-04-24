@@ -1,4 +1,4 @@
-# == Class: customer-syslog
+# == Class: customer_syslog
 #
 # Puppet module to manage customer syslog configuration
 #
@@ -60,7 +60,7 @@
 #
 # === Examples
 #
-#  class { 'customer-syslog':
+#  class { 'customer_syslog':
 #    enabled => true,
 #    entry_list => '[ { host => 192.168.1.1',
 #                       port => 514,
@@ -75,9 +75,9 @@
 #
 # === Copyright
 #
-# Copyright 2017 Matthew Morgan, Plexxi, Inc
+# Copyright 2018 Matthew Morgan, Plexxi, Inc
 #
-class customer-syslog(
+class customer_syslog (
   $enabled,
   $entry_list = [],
 ) {

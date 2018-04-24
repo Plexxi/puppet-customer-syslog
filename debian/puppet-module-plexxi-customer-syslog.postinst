@@ -20,8 +20,8 @@ set -e
 
 case "$1" in
     configure)
-        update-alternatives --install /usr/share/puppet/modules/customer-syslog puppet-module-customer-syslog \
-            /usr/share/puppet/modules.available/plexxi-customer-syslog 500
+        update-alternatives --install /usr/share/puppet/modules/customer_syslog puppet-module-customer_syslog \
+            /usr/share/puppet/modules.available/plexxi-customer_syslog 500
         ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

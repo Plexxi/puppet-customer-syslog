@@ -1,6 +1,6 @@
 {
-  "name": "plexxi-customer-syslog",
-  "version": "1.0.0",
+  "name": "plexxi-customer_syslog",
+  "version": "1.0.2",
   "author": "plexxi",
   "summary": "Configure customer rsyslog options",
   "license": "Apache 2.0",
