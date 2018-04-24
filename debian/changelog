@@ -1,8 +1,8 @@
-puppet-module-plexxi-customer-syslog (1.0.2) UNRELEASED; urgency=medium
+puppet-module-plexxi-customer-syslog (1.0.2) unstable; urgency=medium
 
   * change hyphen in class name to underscore
 
- -- Matthew Morgan <matt.morgan@plexxi.com>  Tue, 24 Apr 2018 14:46:58 -0400
+ -- Matthew Morgan <matt.morgan@plexxi.com>  Tue, 24 Apr 2018 15:09:32 -0400
 
 puppet-module-plexxi-customer-syslog (1.0.1) unstable; urgency=medium
 
