@@ -1,3 +1,9 @@
+puppet-module-plexxi-customer-syslog (1.0.3) unstable; urgency=medium
+
+  * Changed type validation to Puppet 4.0 data type declaration 
+
+ -- Matthew Morgan <matt.morgan@plexxi.com>  Thu, 10 May 2018 13:39:09 -0400
+
 puppet-module-plexxi-customer-syslog (1.0.2) unstable; urgency=medium
 
   * change hyphen in class name to underscore
